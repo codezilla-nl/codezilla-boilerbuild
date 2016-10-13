@@ -1,0 +1,16 @@
+/*
+** ITCSS Architecture. For more info: http://technotif.com/manage-large-css-projects-with-itcss/
+*/
+
+/* Generic */
+@import 'node_modules/normalize-css/normalize';
+
+/* Tools */
+@import 'scss/mixins';
+
+/* Objects */
+
+/* Components */
+@import 'partials/header/header';
+@import 'partials/body/body';
+@import 'partials/footer/footer';

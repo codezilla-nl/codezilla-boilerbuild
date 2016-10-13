@@ -1,0 +1,53 @@
+{
+  "name": "scaffold-zilla",
+  "version": "1.0.0",
+  "description": "A scaffold architecture for smaller projects",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "npm run watch-css & npm run watch-js & npm run watch-html & npm run serve-dist",
+    "test": "npm run test-e2e",
+    "serve-dist": "http-server . -p 2468 & open http://localhost:2468/dist",
+    "publish-dist": "npm run build-dist && npm version patch && npm publish",
+    "build-dist": "npm run lint-css && npm run lint-js && npm run clean-dist && npm run build-css && npm run autoprefix-css && npm run build-js && npm run build-html",
+    "build-css": "node-sass --include-path src/partials:node_modules src/app.scss dist/app.css --output-style compressed",
+    "build-js": "rollup -c",
+    "build-html": "posthtml -i src/index.html -o dist/index.html -u include",
+    "watch-css": "nodemon --ignore dist -e scss -x \"npm run build-css\"",
+    "watch-js": "nodemon --ignore dist -e js -x \"npm run build-js\"",
+    "watch-html": "nodemon --ignore dist -e html -x \"npm run build-html\"",
+    "autoprefix-css": "postcss -u autoprefixer --autoprefixer.browsers \"last 2 versions\" -o dist/app.css dist/app.css",
+    "lint-css": "stylelint 'src/**/*.scss' --syntax scss",
+    "lint-js": "eslint 'src/**/*.js'",
+    "test-e2e": "protractor --baseUrl='http://localhost:2468/dist' protractor.config.js",
+    "clean-dist": "rm -Rf dist/*",
+    "clean-public": "rm -Rf public/*",
+    "postversion": "git add package.json && git commit -m 'Updated version' && git push && git push --tags"
+  },
+  "author": [
+    "huib@codezilla.nl"
+  ],
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.4.1",
+    "babel-cli": "^6.11.4",
+    "babel-preset-es2015-rollup": "^1.2.0",
+    "eslint": "^3.3.1",
+    "eslint-config-standard": "^6.2.0",
+    "eslint-plugin-promise": "^3.0.0",
+    "eslint-plugin-standard": "^2.0.1",
+    "http-server": "^0.9.0",
+    "node-sass": "^3.8.0",
+    "nodemon": "^1.10.0",
+    "normalize-css": "^2.3.1",
+    "postcss": "^5.2.0",
+    "postcss-cli": "^2.6.0",
+    "posthtml-cli": "^0.2.5",
+    "posthtml-include": "^1.1.0",
+    "rollup": "^0.34.7",
+    "rollup-plugin-babel": "^2.6.1",
+    "rollup-plugin-string": "^2.0.2",
+    "rollup-plugin-uglify": "^1.0.1",
+    "stylelint": "5.4.0",
+    "stylelint-declaration-use-variable": "^1.5.0"
+  }
+}
